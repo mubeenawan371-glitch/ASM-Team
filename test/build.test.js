@@ -17,17 +17,10 @@ test('every page is real HTML and not raw Markdown', () => {
     assert.doesNotMatch(html, /^# /m);
   }
 });
-
-// Test 3: a built page must never be empty
-const t3 = require('node:test');
-const assert3 = require('node:assert');
-const fs3 = require('node:fs');
-const path3 = require('node:path');
-t3.test('no built page is empty', () => {
-  const dir = path3.join(__dirname, '..', 'out');
-  const pages = fs3.readdirSync(dir).filter(f => f.endsWith('.html'));
-  assert3.ok(pages.length > 0, 'no pages were built');
+// The third test students are asked to add in Section 5.5.
+// Accept any assertion that fails on a zero-byte page; this is one way.
+test('no page is empty', () => {
   for (const p of pages) {
-    assert3.ok(fs3.statSync(path3.join(dir, p)).size > 0, p + ' is empty');
+    assert.ok(fs.statSync('out/' + p).size > 0, p + ' is empty');
   }
 });
